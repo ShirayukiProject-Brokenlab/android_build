@@ -147,12 +147,12 @@ function check_product()
         echo "Couldn't locate the top of the tree.  Try setting TOP." >&2
         return
     fi
-    if (echo -n $1 | grep -q -e "^arrow_") ; then
-        ARROW_BUILD=$(echo -n $1 | sed -e 's/^arrow_//g')
+    if (echo -n $1 | grep -q -e "^yuki_") ; then
+        YUKI_BUILD=$(echo -n $1 | sed -e 's/^yuki_//g')
     else
-        ARROW_BUILD=
+        YUKI_BUILD=
     fi
-    export ARROW_BUILD
+    export YUKI_BUILD
 
         TARGET_PRODUCT=$1 \
         TARGET_BUILD_VARIANT= \
@@ -764,16 +764,16 @@ function lunch()
 
     if ! check_product $product
     then
-        # if we can't find a product, try to grab it off the ArrowOS GitHub
+        # if we can't find a product, try to grab it off the yukiprjkt GitHub
         T=$(gettop)
         cd $T > /dev/null
-        vendor/arrow/build/tools/roomservice.py $product
+        vendor/yuki/build/tools/roomservice.py $product
         cd - > /dev/null
         check_product $product
     else
         T=$(gettop)
         cd $T > /dev/null
-        vendor/arrow/build/tools/roomservice.py $product true
+        vendor/yuki/build/tools/roomservice.py $product true
         cd - > /dev/null
     fi
 
@@ -790,6 +790,7 @@ function lunch()
         echo
         echo "** Don't have a product spec for: '$product'"
         echo "** Do you have the right repo manifest?"
+        echo "yukiprjkt: aborting lunch command"
         product=
     fi
 
@@ -822,7 +823,7 @@ function lunch()
       check_mu_config
     fi
 
-    arrow_prebuilts
+    yuki_prebuilts
 }
 
 unset COMMON_LUNCH_CHOICES_CACHE
@@ -1997,9 +1998,9 @@ validate_current_shell
 source_vendorsetup
 addcompletions
 
-function arrow_prebuilts() {
-    if [ -z ${ARROW_PREBUILTS} ]; then
-        bash $ANDROID_BUILD_TOP/packages/apps/ArrowPrebuilts/ArrowPrebuilts.sh
-        export ARROW_PREBUILTS=1
+function yuki_prebuilts() {
+    if [ -z ${YUKI_PREBUILTS} ]; then
+        bash $ANDROID_BUILD_TOP/packages/apps/YukiPrebuilts/YukiPrebuilts.sh
+        export YUKI_PREBUILTS=1
     fi
 }

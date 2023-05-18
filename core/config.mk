@@ -356,8 +356,8 @@ include $(BUILD_SYSTEM)/envsetup.mk
 FIND_LEAVES_EXCLUDES := $(addprefix --prune=, $(SCAN_EXCLUDE_DIRS) .repo .git)
 
 -include vendor/extra/BoardConfigExtra.mk
-ifneq ($(ARROW_BUILD),)
-include vendor/arrow/config/BoardConfigArrow.mk
+ifneq ($(YUKI_BUILD),)
+include vendor/yuki/config/BoardConfigYuki.mk
 endif
 
 # The build system exposes several variables for where to find the kernel
@@ -1270,11 +1270,11 @@ dont_bother_goals := out product-graph
 # consistency with those defined in BoardConfig.mk files.
 include $(BUILD_SYSTEM)/android_soong_config_vars.mk
 
-ifneq ($(ARROW_BUILD),)
-ifneq ($(wildcard device/arrow/sepolicy/common/sepolicy.mk),)
+ifneq ($(YUKI_BUILD),)
+ifneq ($(wildcard device/yuki/sepolicy/common/sepolicy.mk),)
 ## We need to be sure the global selinux policies are included
 ## last, to avoid accidental resetting by device configs
-$(eval include device/arrow/sepolicy/common/sepolicy.mk)
+$(eval include device/yuki/sepolicy/common/sepolicy.mk)
 endif
 endif
 
